@@ -1,4 +1,4 @@
-import { ValidationRule } from "@ncform/ncform-common";
+import { ValidationRule } from "../../../ncform-common/dist/ncformCommon";
 
 class EmailRule extends ValidationRule {
   constructor(props) {

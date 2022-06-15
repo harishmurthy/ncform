@@ -99,7 +99,7 @@
 
 <script>
 
-  import ncformCommon from '@ncform/ncform-common';
+  import ncformCommon from '../../../../ncform-common/dist/ncformCommon';
   import Sortable from "sortablejs";
 
   const layoutArrayMixin = ncformCommon.mixins.vue.layoutArrayMixin;

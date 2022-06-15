@@ -1,4 +1,4 @@
-import ncformCommon from "@ncform/ncform-common";
+import ncformCommon from '../../../ncform-common/dist/ncformCommon';
 
 const { notEmptyVal, getValType } = ncformCommon.ncformUtils;
 const { ValidationRule } = ncformCommon;

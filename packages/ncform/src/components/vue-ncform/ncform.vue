@@ -17,7 +17,7 @@
 import _get from 'lodash-es/get';
 import _cloneDeep from 'lodash-es/cloneDeep';
 import _omit from 'lodash-es/omit';
-import ncformCommon from '@ncform/ncform-common';
+import ncformCommon from '../../../../ncform-common/dist/ncformCommon';
 import formItem from './form-item.vue';
 
 const ncformUtils = ncformCommon.ncformUtils;

@@ -67,7 +67,7 @@
     "src"
   ],
   "dependencies": {
-    "@ncform/ncform-common": "^1.7.9",
+    "@ncform/ncform-common": "file:../ncform-common",
     "axios": "^0.21.1",
     "extend": "^3.0.2",
     "lodash-es": "^4.16.2",

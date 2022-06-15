@@ -11,7 +11,7 @@
 
 <script>
 
-  import ncformCommon from '@ncform/ncform-common';
+  import ncformCommon from '../../../../ncform-common/dist/ncformCommon';
 
   const controlMixin = ncformCommon.mixins.vue.controlMixin;
 

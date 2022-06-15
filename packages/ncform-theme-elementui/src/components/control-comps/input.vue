@@ -1,162 +1,82 @@
 <template>
   <div class="ncform-input">
     <!-- 没有自动补全 -->
-    <el-input
-      v-if="!mergeConfig.autocomplete"
-      :size="mergeConfig.size"
-      :disabled="disabled"
-      :readonly="readonly"
-      :placeholder="placeholder"
-      v-show="!hidden"
-      :clearable="mergeConfig.clearable"
-      :type="mergeConfig.type === 'file' ? 'text' : mergeConfig.type"
-      :prefix-icon="mergeConfig.prefixIcon"
-      :suffix-icon="mergeConfig.suffixIcon"
-      @blur="onBlur"
-      v-model="inputVal"
-    >
+    <el-input v-if="!mergeConfig.autocomplete" :size="mergeConfig.size" :disabled="disabled" :readonly="readonly"
+      :placeholder="placeholder" v-show="!hidden" :clearable="mergeConfig.clearable"
+      :type="mergeConfig.type === 'file' ? 'text' : mergeConfig.type" :prefix-icon="mergeConfig.prefixIcon"
+      :suffix-icon="mergeConfig.suffixIcon" @blur="onBlur" v-model="inputVal">
       <template v-if="mergeConfig.type !== 'file' && mergeConfig.compound">
-        <template
-          slot="prepend"
-          v-if="mergeConfig.compound.prependLabel"
-        >{{mergeConfig.compound.prependLabel}}</template>
-        <template
-          slot="append"
-          v-if="mergeConfig.compound.appendLabel"
-        >{{mergeConfig.compound.appendLabel}}</template>
+        <template slot="prepend" v-if="mergeConfig.compound.prependLabel">{{ mergeConfig.compound.prependLabel
+        }}</template>
+        <template slot="append" v-if="mergeConfig.compound.appendLabel">{{ mergeConfig.compound.appendLabel
+        }}</template>
 
-        <el-button
-          slot="prepend"
-          v-if="mergeConfig.compound.prependIcon"
-          :icon="mergeConfig.compound.prependIcon"
-        ></el-button>
-        <el-button
-          slot="append"
-          v-if="mergeConfig.compound.appendIcon"
-          :icon="mergeConfig.compound.appendIcon"
-        ></el-button>
+        <el-button slot="prepend" v-if="mergeConfig.compound.prependIcon" :icon="mergeConfig.compound.prependIcon">
+        </el-button>
+        <el-button slot="append" v-if="mergeConfig.compound.appendIcon" :icon="mergeConfig.compound.appendIcon">
+        </el-button>
 
-        <el-select
-          v-if="mergeConfig.compound.prependSelect"
-          v-model="prependSelectVal"
-          slot="prepend"
-          :placeholder="mergeConfig.compound.prependSelect.placeholder || $nclang('selectPls')"
-        >
-          <el-option
-            v-for="item in prependSelectOptions"
+        <el-select v-if="mergeConfig.compound.prependSelect" v-model="prependSelectVal" slot="prepend"
+          :placeholder="mergeConfig.compound.prependSelect.placeholder || $nclang('selectPls')">
+          <el-option v-for="item in prependSelectOptions"
             :label="item[mergeConfig.compound.prependSelect.itemLabelField]"
             :value="item[mergeConfig.compound.prependSelect.itemValueField]"
-            :key="item[mergeConfig.compound.prependSelect.itemValueField]"
-          ></el-option>
+            :key="item[mergeConfig.compound.prependSelect.itemValueField]"></el-option>
         </el-select>
 
-        <el-select
-          v-if="mergeConfig.compound.appendSelect"
-          v-model="appendSelectVal"
-          slot="append"
-          :placeholder="mergeConfig.compound.appendSelect.placeholder || $nclang('selectPls')"
-        >
-          <el-option
-            v-for="item in appendSelectOptions"
-            :label="item[mergeConfig.compound.appendSelect.itemLabelField]"
+        <el-select v-if="mergeConfig.compound.appendSelect" v-model="appendSelectVal" slot="append"
+          :placeholder="mergeConfig.compound.appendSelect.placeholder || $nclang('selectPls')">
+          <el-option v-for="item in appendSelectOptions" :label="item[mergeConfig.compound.appendSelect.itemLabelField]"
             :value="item[mergeConfig.compound.appendSelect.itemValueField]"
-            :key="item[mergeConfig.compound.appendSelect.itemValueField]"
-          ></el-option>
+            :key="item[mergeConfig.compound.appendSelect.itemValueField]"></el-option>
         </el-select>
       </template>
 
       <!--上传类型-->
       <template v-else-if="mergeConfig.type === 'file' && mergeConfig.upload">
-        <el-button
-          slot="append"
-          v-if="mergeConfig.upload.uploadUrl"
-          class="ncform-input-upload"
-          @click="handleClickUpload"
-        >
-          {{isUploading ? $nclang('uploading') : mergeConfig.upload.uploadText || $nclang('upload')}}
-          <input
-            type="file"
-            ref="upload"
-            :accept="mergeConfig.upload.accept || ''"
-            @change="handleFileChange"
-          >
+        <el-button slot="append" v-if="mergeConfig.upload.uploadUrl" class="ncform-input-upload"
+          @click="handleClickUpload">
+          {{ isUploading ? $nclang('uploading') : mergeConfig.upload.uploadText || $nclang('upload') }}
+          <input type="file" ref="upload" :accept="mergeConfig.upload.accept || ''" @change="handleFileChange">
         </el-button>
       </template>
     </el-input>
 
     <!-- 自动补全 -->
-    <el-autocomplete
-      v-else
-      :disabled="disabled"
-      :readonly="readonly"
-      :placeholder="placeholder"
-      v-show="!hidden"
-      :clearable="mergeConfig.clearable"
-      :size="mergeConfig.size"
-      :type="mergeConfig.type"
-      :prefix-icon="mergeConfig.prefixIcon"
-      :suffix-icon="mergeConfig.suffixIcon"
-      :fetch-suggestions="querySearch"
+    <el-autocomplete v-else :disabled="disabled" :readonly="readonly" :placeholder="placeholder" v-show="!hidden"
+      :clearable="mergeConfig.clearable" :size="mergeConfig.size" :type="mergeConfig.type"
+      :prefix-icon="mergeConfig.prefixIcon" :suffix-icon="mergeConfig.suffixIcon" :fetch-suggestions="querySearch"
       :trigger-on-focus="!!mergeConfig.autocomplete.immediateShow"
-      :value-key="mergeConfig.autocomplete.itemValueField || 'value'"
-      v-model="inputVal"
-      @select="onSelectSuggectionItem"
-      @blur="onBlur"
-    >
-      <template
-        slot-scope="props"
-        v-if="mergeConfig.autocomplete && mergeConfig.autocomplete.itemTemplate"
-      >
+      :value-key="mergeConfig.autocomplete.itemValueField || 'value'" v-model="inputVal"
+      @select="onSelectSuggectionItem" @blur="onBlur">
+      <template slot-scope="props" v-if="mergeConfig.autocomplete && mergeConfig.autocomplete.itemTemplate">
         <component :is="itemTemplate" :item="props.item"></component>
       </template>
 
       <template v-if="mergeConfig.compound">
-        <template
-          slot="prepend"
-          v-if="mergeConfig.compound.prependLabel"
-        >{{mergeConfig.compound.prependLabel}}</template>
-        <template
-          slot="append"
-          v-if="mergeConfig.compound.appendLabel"
-        >{{mergeConfig.compound.appendLabel}}</template>
+        <template slot="prepend" v-if="mergeConfig.compound.prependLabel">{{ mergeConfig.compound.prependLabel
+        }}</template>
+        <template slot="append" v-if="mergeConfig.compound.appendLabel">{{ mergeConfig.compound.appendLabel
+        }}</template>
 
-        <el-button
-          slot="prepend"
-          v-if="mergeConfig.compound.prependIcon"
-          :icon="mergeConfig.compound.prependIcon"
-        ></el-button>
-        <el-button
-          slot="append"
-          v-if="mergeConfig.compound.appendIcon"
-          :icon="mergeConfig.compound.appendIcon"
-        ></el-button>
+        <el-button slot="prepend" v-if="mergeConfig.compound.prependIcon" :icon="mergeConfig.compound.prependIcon">
+        </el-button>
+        <el-button slot="append" v-if="mergeConfig.compound.appendIcon" :icon="mergeConfig.compound.appendIcon">
+        </el-button>
 
-        <el-select
-          v-if="mergeConfig.compound.prependSelect"
-          v-model="prependSelectVal"
-          slot="prepend"
-          :placeholder="mergeConfig.compound.prependSelect.placeholder || $nclang('selectPls')"
-        >
-          <el-option
-            v-for="item in prependSelectOptions"
+        <el-select v-if="mergeConfig.compound.prependSelect" v-model="prependSelectVal" slot="prepend"
+          :placeholder="mergeConfig.compound.prependSelect.placeholder || $nclang('selectPls')">
+          <el-option v-for="item in prependSelectOptions"
             :label="item[mergeConfig.compound.prependSelect.itemLabelField]"
             :value="item[mergeConfig.compound.prependSelect.itemValueField]"
-            :key="item[mergeConfig.compound.prependSelect.itemValueField]"
-          ></el-option>
+            :key="item[mergeConfig.compound.prependSelect.itemValueField]"></el-option>
         </el-select>
 
-        <el-select
-          v-if="mergeConfig.compound.appendSelect"
-          v-model="appendSelectVal"
-          slot="append"
-          :placeholder="mergeConfig.compound.appendSelect.placeholder || $nclang('selectPls')"
-        >
-          <el-option
-            v-for="item in appendSelectOptions"
-            :label="item[mergeConfig.compound.appendSelect.itemLabelField]"
+        <el-select v-if="mergeConfig.compound.appendSelect" v-model="appendSelectVal" slot="append"
+          :placeholder="mergeConfig.compound.appendSelect.placeholder || $nclang('selectPls')">
+          <el-option v-for="item in appendSelectOptions" :label="item[mergeConfig.compound.appendSelect.itemLabelField]"
             :value="item[mergeConfig.compound.appendSelect.itemValueField]"
-            :key="item[mergeConfig.compound.appendSelectVal.itemValueField]"
-          ></el-option>
+            :key="item[mergeConfig.compound.appendSelectVal.itemValueField]"></el-option>
         </el-select>
       </template>
     </el-autocomplete>
@@ -168,14 +88,17 @@
   .el-select .el-input {
     width: 130px;
   }
+
   .input-with-select .el-input-group__prepend {
     background-color: #fff;
   }
+
   .ncform-input-upload {
     [type="file"] {
       display: none;
     }
   }
+
   .el-autocomplete {
     width: 100%;
   }
@@ -183,7 +106,7 @@
 </style>
 
 <script>
-import ncformCommon from "@ncform/ncform-common";
+import ncformCommon from "../../../../ncform-common/dist/ncformCommon";
 import _get from "lodash-es/get";
 import _cloneDeep from "lodash-es/cloneDeep";
 
@@ -237,7 +160,7 @@ export default {
       this.$data.inputVal =
         ["string", "number"].indexOf(typeof this.$data.modelVal) >= 0
           ? this.$data.modelVal
-          : this.$data.modelVal[this.mergeConfig.modelField];
+          : _get(this.$data.modelVal, this.mergeConfig.modelField, null);
     }
 
     if (_get(this.mergeConfig, "autocomplete.itemTemplate")) {
@@ -263,10 +186,10 @@ export default {
           this.$data.prependSelectOptions = this.mergeConfig.compound
             .prependSelect.enumSourceRemote.resField
             ? _get(
-                res.data,
-                this.mergeConfig.compound.prependSelect.enumSourceRemote
-                  .resField
-              )
+              res.data,
+              this.mergeConfig.compound.prependSelect.enumSourceRemote
+                .resField
+            )
             : res.data;
         });
       }
@@ -274,7 +197,7 @@ export default {
         this.value,
         _get(this.mergeConfig, "compound.prependSelect.modelField")
       );
-      this.$watch("prependSelectVal", function() {
+      this.$watch("prependSelectVal", function () {
         let val = this._processModelVal();
         this.$emit("input", val);
       });
@@ -296,10 +219,10 @@ export default {
           this.$data.appendSelectOptions = this.mergeConfig.compound
             .appendSelect.enumSourceRemote.resField
             ? _get(
-                res.data,
-                this.mergeConfig.compound.appendSelect.enumSourceRemote
-                  .resField
-              )
+              res.data,
+              this.mergeConfig.compound.appendSelect.enumSourceRemote
+                .resField
+            )
             : res.data;
         });
       }
@@ -308,7 +231,7 @@ export default {
         _get(this.mergeConfig, "compound.appendSelect.modelField")
       );
 
-      this.$watch("appendSelectVal", function() {
+      this.$watch("appendSelectVal", function () {
         let val = this._processModelVal();
         this.$emit("input", val);
       });
@@ -491,9 +414,9 @@ export default {
           vm.mergeConfig.upload.constraint.height
         ) {
           let reader = new FileReader();
-          reader.onload = function(theFile) {
+          reader.onload = function (theFile) {
             var image = new Image();
-            image.onload = function() {
+            image.onload = function () {
               let pass = false;
               if (vm.mergeConfig.upload.constraint.sizeFixed) {
                 pass =
@@ -511,9 +434,8 @@ export default {
                 if (vm.mergeConfig.upload.constraint.sizeFixed) {
                   vm.$message({
                     message: vm.$nclang("resolutionTip1", {
-                      right: `${vm.mergeConfig.upload.constraint.width}x${
-                        vm.mergeConfig.upload.constraint.height
-                      }`,
+                      right: `${vm.mergeConfig.upload.constraint.width}x${vm.mergeConfig.upload.constraint.height
+                        }`,
                       wrong: `${this.width}x${this.height}`
                     }),
                     type: "error"
@@ -523,7 +445,7 @@ export default {
                     message: vm.$nclang("resolutionTip2", {
                       right: vm._getFractionalExpression(
                         vm.mergeConfig.upload.constraint.width /
-                          vm.mergeConfig.upload.constraint.height,
+                        vm.mergeConfig.upload.constraint.height,
                         0.01
                       ),
                       wrong: vm._getFractionalExpression(

@@ -57,7 +57,7 @@
 
 <script>
 
-  import ncformCommon from '@ncform/ncform-common';
+  import ncformCommon from "../../../../ncform-common/dist/ncformCommon";
   import _get from 'lodash-es/get';
 
   const controlMixin = ncformCommon.mixins.vue.controlMixin;

@@ -160,7 +160,7 @@
 </style>
 
 <script>
-import ncformCommon from '@ncform/ncform-common';
+import ncformCommon from '../../../../ncform-common/dist/ncformCommon';
 
 const ncformUtils = ncformCommon.ncformUtils;
 const layoutObjectMixin = ncformCommon.mixins.vue.layoutObjectMixin;

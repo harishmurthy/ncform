@@ -31,7 +31,7 @@
 <script>
 import _get from "lodash-es/get";
 import _cloneDeep from "lodash-es/cloneDeep";
-import ncformCommon from "@ncform/ncform-common";
+import ncformCommon from "../../../../ncform-common/dist/ncformCommon";
 
 const controlMixin = ncformCommon.mixins.vue.controlMixin;
 const ncformUtils = ncformCommon.ncformUtils;

@@ -1,4 +1,4 @@
-import { ValidationRule } from "@ncform/ncform-common";
+import { ValidationRule } from "../../../ncform-common/dist/ncformCommon";
 import _merge from 'lodash-es/merge';
 import _get from 'lodash-es/get';
 
