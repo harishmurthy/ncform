@@ -24,6 +24,7 @@
     "commit": "git-cz",
     "release:log": "conventional-changelog -p angular -i CHANGELOG_TEMP.md -s -r 0",
     "release": "lerna run release && lerna publish",
+    "local-release": "lerna run release",
     "test": "lerna run test"
   },
   "gitHooks": {
