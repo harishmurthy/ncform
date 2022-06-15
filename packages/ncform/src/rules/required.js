@@ -11,7 +11,6 @@ class RequiredRule extends ValidationRule {
   }
 
   validateLogic(val, ruleVal) {
-    console.log("hit!!");
     if (!ruleVal) return true;
     return notEmptyVal(val);
   }

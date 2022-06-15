@@ -65,12 +65,12 @@ context('ui.preview', () => {
     let id = md5('Link preview');
     cy.get(`[data-cy=${id}]`).within(() => {
       cy.get('label').contains('link1').next().as('link1');
-      cy.get('@link1').find('a').should('exist').and('have.prop', 'href', 'https://github.com/ncform/ncform');
+      cy.get('@link1').find('a').should('exist').and('have.prop', 'href', 'https://github.com/harishmurthy/ncform');
       cy.get('@link1').find('input').clear().type('https://github.com/daniel-dx');
       cy.get('@link1').find('a').should('have.prop', 'href', 'https://github.com/daniel-dx');
 
       cy.get('label').contains('link2').next().as('link2');
-      cy.get('@link2').find('a').should('exist').and('have.prop', 'href', 'https://github.com/ncform/ncform');
+      cy.get('@link2').find('a').should('exist').and('have.prop', 'href', 'https://github.com/harishmurthy/ncform');
       cy.get('@link2').find('.clear').click();
       cy.get('@link2').find('input').should('have.value', '');
     })
