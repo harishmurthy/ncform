@@ -21,6 +21,7 @@
     :file-list="fileList"
     :name="mergeConfig.fileField"
     :headers="mergeConfig.headers"
+    :with-credentials="true"
   >
     <!-- 1. 可拖拽 -->
     <template v-if="!readonly && mergeConfig.drag" slot="trigger">
